@@ -92,31 +92,36 @@ public class Main extends Application implements Serializable {
         });
 
         // Load from DB
-        Button btnLoadDB = new Button("Load Students from DB");
-        TextField tfLoadStudents = new TextField();
+        Button btnLoadDB = new Button("Load Students to DB");
+        TextField tfLoadStudent = new TextField();
+        tfLoadStudent.setPromptText("Enter Path to BD");
 
-        tfLoadStudents.setPromptText("Please enter DB path");
-        btnLoadDB.setOnAction(e -> {
 
-            try{
-                File studentDB = new File(tfLoadStudents.getText());
+         btnLoadDB.setOnAction(e -> {
+
+             try {
+                File studentDB = new File(tfLoadStudent.getText());
                 ObjectInputStream in = new ObjectInputStream(new FileInputStream(studentDB));
-                sm = (StudentManager) in.readObject();
+                sm = (StudentManager)in.readObject();
                 in.close();
-                taMyOutput.setText("Successfully loaded Students from Database");
-            } catch (Exception exception) {
+                taMyOutput.setText("Student Database Loaded");
+               
+       
+             } catch (Exception exception) {
                     System.out.print("[Error] Cannont load DB. Cause: ");
                     exception.printStackTrace();
                     taMyOutput.setText("ERROR: Failed to load Students DB!");
-            }
-
+                }
         });
 
-        // Add Quit button
-		Button btnQuit = new Button("Quit");	
-        btnQuit.setOnAction(e -> 
-            Platform.exit()
-        );
+
+    // Quit button
+     Button btnQuit = new Button("Quit");
+        btnQuit.setOnAction(e -> {
+            Platform.exit();
+        });
+
+       
 
         // Adding and arranging all the nodes in the grid - add(node, column, row)
         GridPane gridPane1 = new GridPane();
@@ -128,9 +133,10 @@ public class Main extends Application implements Serializable {
         gridPane1.add(btnDelStudent, 1, 2);
         gridPane1.add(btnSaveDB, 0, 3);
         gridPane1.add(btnLoadDB, 0, 4);
-        gridPane1.add(tfLoadStudents, 1, 4);
+        gridPane1.add(tfLoadStudent, 1, 4);
+      
         gridPane1.add(taMyOutput, 0, 5, 2, 1);
-        gridPane1.add(btnQuit, 0, 6);
+       gridPane1.add(btnQuit, 0, 6);
 
         // Preparing the Stage (i.e. the container of any JavaFX application)
         // Create a Scene by passing the root group object, height and width
